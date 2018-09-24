@@ -44,7 +44,7 @@ bootstrap <- function(map,otu,X,Y,time,sample_ID,lat_lon, min_bump,n.straps = 10
       time.j <- time[myOrder]
       
       #calculate bray-curtis similarity. transpose of otu table necessary to get distances.
-      bray.dis <- vegdist(t(otu.j), method='bray')
+      bray.dis <- vegan::vegdist(t(otu.j), method='bray')
       bray.sim <- 1 - as.matrix(bray.dis)
       #account for zeros in bray.sim by adding the smallest similarity value in the dataset to every observation
       if(min_bump == T){
@@ -53,7 +53,7 @@ bootstrap <- function(map,otu,X,Y,time,sample_ID,lat_lon, min_bump,n.straps = 10
       
       #generate space matrix.
       if(lat_lon == F){
-        space.m <- as.matrix(pairdist(X.j, Y.j))
+        space.m <- as.matrix(spatstat::pairdist(X.j, Y.j))
       }
       
       if(lat_lon == T){
@@ -70,7 +70,7 @@ bootstrap <- function(map,otu,X,Y,time,sample_ID,lat_lon, min_bump,n.straps = 10
       names(d) <- c('bray.sim','space','time')
       
       #analyze data subset i. 
-      lower  <- lapply(d, lower)
+      lower  <- lapply(d, ecodist::lower)
       d      <- as.data.frame(lapply(lower, c))
       
       #run model.

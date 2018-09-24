@@ -49,3 +49,27 @@ tal_clean_otu.path <- paste0(pecan.dir,'tal_otu_filtered.rds')
     tal_model_output.path <- paste0(pecan.dir,'talbot_R1_data_fitted_st.env.rds')
 #scc_gen: bootstrap results.
 tal_bootstrap_output.path <- paste0(scc.dir,'talbot2014_bootstrap_data.rds')
+
+#Kivlin 2016 Files.----
+#original_data: raw files.
+kiv_raw_bac_otu.path <- paste0(raw.dir,'BacteriaOTUTable_2016_04_15.csv')
+kiv_raw_bac_map.path <- paste0(raw.dir,'BacteriaENVNoPrimaryNoFeb2012_2015_08_02.csv')
+kiv_raw_fun_otu.path <- paste0(raw.dir,'FungiDeSeq2NoSampleSingletonsNoPlants2015_11_04.csv')
+kiv_raw_fun_map.path <- paste0(raw.dir,'ENVfungiNoPrimaryNoFeb2012_2015_10_16.csv')
+#pecan_gen: data formatting.
+kiv_clean_bac_otu.path <- paste0(pecan.dir,'kivlin.bacteria_otu_formatted.rds')
+kiv_clean_bac_map.path <- paste0(pecan.dir,'kivlin.bacteria_map_formatted.rds')
+kiv_clean_fun_otu.path <- paste0(pecan.dir,'kivlin.fungi_otu_formatted.rds')
+kiv_clean_fun_map.path <- paste0(pecan.dir,'kivlin.fungi_map_formatted.rds')
+#pecan_gen: models and parameters.
+kiv_bac_figure_data.path <- paste0(pecan.dir,'kiv_bac_figure_data.rds')
+kiv_fun_figure_data.path <- paste0(pecan.dir,'kiv_fun_figure_data.rds')
+      kiv_bac_param.path <- paste0(pecan.dir,'kiv_bac_param.rds')
+      kiv_fun_param.path <- paste0(pecan.dir,'kiv_fun_param.rds')
+      
+#pecan_gen: bootstrap results.
+kiv_bac_bootstrap.path <- paste0(pecan.dir,'kiv_bac_bootstrap.rds')
+kiv_fun_bootstrap.path <- paste0(pecan.dir,'kiv_fun_bootstrap.rds')
+kiv_bac_sub100_bootstrap.path <- paste0(pecan.dir,'kiv_bac_sub100_bootstrap.rds')
+kiv_fun_sub100_bootstrap.path <- paste0(pecan.dir,'kiv_fun_sub100_bootstrap.rds')
+
