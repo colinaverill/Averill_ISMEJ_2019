@@ -1,0 +1,2 @@
+#transferring scc_gen on scc to pecan.
+scp -r caverill@scc1.bu.edu:/projectnb/talbot-lab-data/caverill/Averill_ISMEJ_2018_data/scc_gen/. /fs/data3/caverill/Averill_ISMEJ_2018_data/scc_gen/

@@ -1,4 +1,4 @@
-#BOOTSTRAP analysis of Talbot 2014. Colin Averill Sep 24, 2018.
+#BOOTSTRAP analysis of Tedersoo 2014. Colin Averill Sep 21, 2017.
 #clear R environment, load packages
 rm(list=ls())
 source('paths.r')
@@ -6,7 +6,7 @@ source('Scripts/functions/tic_toc.r')
 library(doParallel)
 
 #number of bootstrap simulations.
-n.straps <- 1000
+n.straps <- 2
 
 #register parallel environment.
 registerDoParallel(cores=28)
@@ -19,10 +19,10 @@ otu <- readRDS(tal_clean_otu.path)
 map <- readRDS(tal_clean_map.path)
 #grab model data for relevant covariates.
 mod <- readRDS(tal_model_output.path)
-mod <- mod$st.env.mrm
+mod <- mod[[8]]
 covs <- rownames(mod$coef)
 covs <- covs[!(covs %in% c('Int','space'))]#drop intercept and space. 
-
+  
 #quick complete cases.----
 old.cov.names <- c('epoch.date','doy','seas_pos','Perc.Soil.Moisture','CNRatio','pH','Perc.C','NPP','MAP','MAT','MAT_CV','MAP_CV')
 new.cov.names <- c('epoch.date','doy','seas_pos','Moisture','C_N','pH','C','NPP','MAP','MAT','MAT_CV','MAP_CV')
