@@ -6,7 +6,7 @@ source('Scripts/functions/tic_toc.r')
 library(doParallel)
 
 #number of bootstrap simulations.
-n.straps <- 2
+n.straps <- 1000
 
 #register parallel environment.
 registerDoParallel(cores=28)
