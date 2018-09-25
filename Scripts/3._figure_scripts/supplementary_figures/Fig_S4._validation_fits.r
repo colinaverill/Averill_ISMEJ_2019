@@ -4,22 +4,23 @@ rm(list=ls())
 source('paths.r')
 library(wesanderson)
 
-output.path <- 'Figures/R1_Supplementary_Figures/S1_validation_fits.png'
+#load data, setup output path.----
+output.path <- fig_S4.path
 
-#load and organize data.----
-#bci <- readRDS('/fs/data3/caverill/Microbial_Space_Time_data/BCI50ha_data/figure_data/BCI_data_fitted.rds')
+#load and organize data.
+    bci <- readRDS(bci_fitted.path)
 kiv.bac <- readRDS(kiv_bac_figure_data.path)
 kiv.fun <- readRDS(kiv_fun_figure_data.path)
-#neo.har <- readRDS('/fs/data3/caverill/Microbial_Space_Time_data/NEON_HARV_data/all_data_figures.rds')
+neo.har <- readRDS(harv_neon_fig_data.path)
 
 #subset bci data - too much to plot.
-#bci[[1]] <- bci[[1]][sample(nrow(bci[[1]]),5000),]
+bci[[1]] <- bci[[1]][sample(nrow(bci[[1]]),5000),]
 
 #load bootstrap results.
-#bci.boot     <- readRDS('/fs/data3/caverill/Microbial_Space_Time_data/BCI50ha_data/out_bci_bootstrap.rds')
+bci.boot     <- readRDS(bci_all_boostrap.path)
 kiv.bac.boot <-  data.frame(readRDS(kiv_bac_bootstrap.path))
 kiv.fun.boot <-  data.frame(readRDS(kiv_fun_bootstrap.path))
-#neo.har.boot <-  data.frame(readRDS('/fs/data3/caverill/Microbial_Space_Time_data/NEON_HARV_data/neon.harv_fungi_bootstrap.rds'))
+neo.har.boot <-  data.frame(readRDS(harv_neon_all_boostrap.path))
 
 
 #Begin Plot: png call for saving.----
@@ -50,7 +51,6 @@ m.space <- format(signif(m.space ,3), scientific = T)
 m.time <- format(signif(m.time  ,3), scientific = T)
 space.95 <- format(signif(space.95,3), scientific = T)
 time.95 <- format(signif(time.95 ,3), scientific = T)
-
 
 # Plot Fitted vs. Observed
 plot((d$bray.sim) ~ (d$fitted), cex = p.cex, xlab = NA, ylab = NA, col = cols[1])

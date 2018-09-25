@@ -1,5 +1,4 @@
-#Kivlin 2016 fungi bootstrap.
-#Jacknife analysis of Kivlin 2016 bacteria data. Colin Averill, September 6, 2017.
+#Kivlin 2016 fungi bootstrap.Colin Averill, September 24, 2018.
 #clear R environment, source packages and custom functions.
 rm(list=ls())
 library(doParallel)

@@ -59,7 +59,7 @@ bootstrap <- function(map,otu,X,Y,time,sample_ID,lat_lon, min_bump,n.straps = 10
       if(lat_lon == T){
         points <- data.frame(Y.j, X.j)
         points <- as.matrix(points)
-        space.m <- distm(points, fun = distHaversine)
+        space.m <- geosphere::distm(points)
       }
       
       #generate time matrix

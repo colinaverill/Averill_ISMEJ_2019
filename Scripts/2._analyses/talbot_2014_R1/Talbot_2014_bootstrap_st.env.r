@@ -12,7 +12,7 @@ n.straps <- 1000
 registerDoParallel(cores=28)
 
 #set output path
-output.path <- tal_bootstrap_output.path
+output.path <- tal_bootstrap_st.env_output.path
 
 #load cleaned up map and otu files.----
 otu <- readRDS(tal_clean_otu.path)
@@ -75,10 +75,11 @@ out.boot <-
     #run model - lm is fine. We are testing significance with distribution of effect sizes via boostrap, not permutation via MRM.
     preds <- paste(c('space',covs), collapse = '+')
     mod.formula <- paste0('log(bray.sim) ~ ',preds)
-    m <- ecodist::MRM(mod.formula, data=dat)
+    m <- lm(mod.formula, data=dat)
     
     #return output 
-    return(c(m$coef[,1]))
+    to_return <- coef(m)
+    return(to_return)
     
     #print status update
     cat(paste0(i,' of ',n.straps,' iterations completed...\n'))
@@ -87,6 +88,7 @@ toc()
 
 #collapse output list to data.frame
 output <- data.frame(do.call('rbind',out.boot))
+colnames(output) <- c('intercept','space','seas_pos','epoch.date')
 
 #save output.
 saveRDS(output, output.path)

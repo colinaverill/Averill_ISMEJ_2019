@@ -94,9 +94,11 @@ st.env.dat$intra.norm <- log(st.env.dat$bray.sim) - fitted(st.env) + predict(st.
 st.env.dat$inter.norm <- log(st.env.dat$bray.sim) - fitted(st.env) + predict(st.env, st.env_pred_inter)
 
 #bind up data and rsq values for downstream plotting.----
-st.out <- list(st,env,st.env,st.dat,st.env.dat,st.mrm,st.mrm,env.mrm,st.env.mrm)
+st.out <- list(st,env,st.env,
+               st.dat,st.env.dat
+               ,st.mrm,env.mrm,st.env.mrm)
 names(st.out) <- c('st.lm','env.lm','st.env.lm',
-                   'st.dat','env.dat','st.env.dat',
+                   'st.dat','st.env.dat',
                    'st.mrm','env.mrm','st.env.mrm')
 
 #Save output.----

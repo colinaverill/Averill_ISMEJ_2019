@@ -10,11 +10,11 @@
 #$ -pe omp 28
 #
 #Give the job a name
-#$ -N tal_boot
+#$ -N bci_boot
 #
 # Merge stderr into the stdout file, to reduce clutter
 #$ -j y
-#$ -o $JOB_NAME.log
+#
 #
 # Have the system send mail when the job begins and when the job is aborted or ended
 #$ -m ae
@@ -33,8 +33,12 @@
 # load necessary modules 
 module load R/3.4.0
 #
-#Call script
-Rscript /projectnb/talbot-lab-data/caverill/Averill_ISMEJ_2018/Scripts/2._analyses/talbot_2014_R1/Talbot_2014_bootstrap.r
+# cd into directory, for safety purposes
+cd /project/talbot-lab-data/caverill/space_time/BCI
+#
+# in the directory specified above, invoke this function:
+Rscript BCI_bootstrap.r
 #
 #
 #End of commands.
+#
