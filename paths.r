@@ -35,7 +35,8 @@ ted_model_output.path <- paste0(pecan.dir,'tedersoo_R1_data_fitted_st.env.rds')
 ted_monte_carlo_results.path <- paste0(pecan.dir,'tedersoo_monte_carlo_results.rds')
 
 #tedersoo bootstrap run on scc.
-ted_bootstrap_output.path <- paste0(scc.dir,'tedersoo2014_bootstrap_data.rds')
+ted_bootstrap_st.env_output.path <- paste0(scc.dir,'tedersoo2014_bootstrap_st.env_data.rds')
+ted_bootstrap_st.only_output.path <- paste0(scc.dir,'tedersoo2014_bootstrap_st.only_data.rds')
 
 
 #Talbot 2014 Files.----

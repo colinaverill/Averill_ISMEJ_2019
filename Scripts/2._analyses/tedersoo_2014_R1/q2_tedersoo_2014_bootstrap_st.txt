@@ -34,7 +34,7 @@
 module load R/3.4.0
 #
 #Call script
-Rscript /projectnb/talbot-lab-data/caverill/Averill_ISMEJ_2018/Scripts/2._analyses/tedersoo_2014_R1/tedersoo_2014_bootstrap.r
+Rscript /projectnb/talbot-lab-data/caverill/Averill_ISMEJ_2018/Scripts/2._analyses/tedersoo_2014_R1/tedersoo_2014_bootstrap_st.r
 #
 #
 #End of commands.

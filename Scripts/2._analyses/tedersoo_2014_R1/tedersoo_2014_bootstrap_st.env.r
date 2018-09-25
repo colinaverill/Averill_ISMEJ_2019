@@ -1,5 +1,4 @@
-#BOOTSTRAP analysis of Talbot 2014. Colin Averill Sep 21, 2017.
-#SPACE TIME ONLY, no environmental covariates.
+#BOOTSTRAP analysis of Tedersoo 2014. Colin Averill Sep 21, 2017.
 #clear R environment, load packages
 rm(list=ls())
 source('paths.r')
@@ -13,18 +12,28 @@ n.straps <- 1000
 registerDoParallel(cores=28)
 
 #set output path
-output.path <- tal_bootstrap_st.only_output.path
+output.path <- ted_bootstrap_st.env_output.path
 
 #load cleaned up map and otu files.----
-otu <- readRDS(tal_clean_otu.path)
-map <- readRDS(tal_clean_map.path)
+otu <- readRDS(ted_clean_otu.path)
+map <- readRDS(ted_clean_map.path)
+#grab model data for relevant covariates.
+mod <- readRDS(ted_model_output.path)
+mod <- mod$st.env.mrm
+covs <- rownames(mod$coef)
+covs <- covs[!(covs %in% c('Int','space'))]#drop intercept and space. 
+
+#quick complete cases.----
+old.cov.names <- c('epoch.date','doy','seas_pos','Perc.Soil.Moisture','CNRatio','pH','Perc.C','NPP','MAP','MAT','MAT_CV','MAP_CV')
+new.cov.names <- c('epoch.date','doy','seas_pos','Moisture','C_N','pH','C','NPP','MAP','MAT','MAT_CV','MAP_CV')
+for(i in 1:length(old.cov.names)){colnames(map)[which(names(map) == old.cov.names[i])] <- new.cov.names[i]}
 
 #get complete cases.
-to_keep <- c('seas_pos','epoch.date','latitude.dd','longitude.dd','Mapping.ID','Sample.ID')
+to_keep <- c(new.cov.names,'latitude','longitude','tedersoo.code')
 map <- map[,colnames(map) %in% to_keep]
 map <- map[complete.cases(map),]
-otu <- otu[,colnames(otu) %in% map$Mapping.ID]
-map <- map[order(map$Mapping.ID),]
+otu <- otu[,colnames(otu) %in% map$tedersoo.code]
+map <- map[order(map$tedersoo.code),]
 otu <- otu[,order(colnames(otu))]
 
 #run bootstrap loop.----
@@ -43,14 +52,18 @@ out.boot <-
     bray.sim <- bray.sim + min(bray.sim[bray.sim > 0])
     
     #calulate spatial distance, accounting for curvature of Earth.
-    points <- map.j[,c('longitude.dd','latitude.dd')]
+    points <- map.j[,c('longitude','latitude')]
     space.m <- geosphere::distm(points)
     
     #remaining covariates.
-    intra.m <- as.matrix(dist(map$seas_pos  , method='euclidean', diag=F, upper=F))
-    inter.m <- as.matrix(dist(map$epoch.date, method='euclidean', diag=F, upper=F))
-    cov.matrices <- list(bray.sim,space.m,intra.m,inter.m)
-    names(cov.matrices) <- c('bray.sim','space','seas_pos','epoch.date')
+    cov <- map.j[,colnames(map.j) %in% covs]
+    cov.matrices <- list()
+    for(i in 1:ncol(cov)){
+      cov.matrices[[i]] <- as.matrix(dist(cov[,i], method="euclidean", diag=F, upper=F))
+    }
+    names(cov.matrices) <- colnames(cov)
+    cov.matrices$space <- space.m
+    cov.matrices$bray.sim <- bray.sim
     
     #analyze data subset i. 
     lower  <- lapply(cov.matrices, ecodist::lower)
@@ -60,7 +73,9 @@ out.boot <-
     dat$space <- dat$space / 1000
     
     #run model - lm is fine. We are testing significance with distribution of effect sizes via boostrap, not permutation via MRM.
-    m <- lm(log(bray.sim) ~ space + seas_pos + epoch.date, data=dat)
+    preds <- paste(c('space',covs), collapse = '+')
+    mod.formula <- paste0('log(bray.sim) ~ ',preds)
+    m <- lm(mod.formula, data=dat)
     
     #return output 
     to_return <- coef(m)

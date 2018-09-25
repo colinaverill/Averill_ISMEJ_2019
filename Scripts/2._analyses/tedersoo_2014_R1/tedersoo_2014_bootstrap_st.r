@@ -1,4 +1,5 @@
-#BOOTSTRAP analysis of Tedersoo 2014. Colin Averill Sep 24, 2018.
+#BOOTSTRAP analysis of Tedersoo 2014. Colin Averill Sep 21, 2017.
+#SPACE TIME ONLY, no environmental covariates.
 #clear R environment, load packages
 rm(list=ls())
 source('paths.r')
@@ -12,17 +13,19 @@ n.straps <- 1000
 registerDoParallel(cores=28)
 
 #set output path
-output.path <- ted_bootstrap_output.path
+output.path <- ted_bootstrap_st.only_output.path
 
 #load cleaned up map and otu files.----
 otu <- readRDS(ted_clean_otu.path)
 map <- readRDS(ted_clean_map.path)
-#grab model data for relevant covariates.
-mod <- readRDS(ted_model_output.path)
-mod <- mod$st.env.mrm
-covs <- rownames(mod$coef)
-covs <- covs[!(covs %in% c('Int','space'))]#drop intercept and space. 
 
+#get complete cases.
+to_keep <- c('seas_pos','epoch.date','latitude','longitude','tedersoo.code')
+map <- map[,colnames(map) %in% to_keep]
+map <- map[complete.cases(map),]
+otu <- otu[,colnames(otu) %in% map$tedersoo.code]
+map <- map[order(map$tedersoo.code),]
+otu <- otu[,order(colnames(otu))]
 
 #run bootstrap loop.----
 tic()
@@ -44,14 +47,10 @@ out.boot <-
     space.m <- geosphere::distm(points)
     
     #remaining covariates.
-    cov <- map.j[,colnames(map.j) %in% covs]
-    cov.matrices <- list()
-    for(i in 1:ncol(cov)){
-      cov.matrices[[i]] <- as.matrix(dist(cov[,i], method="euclidean", diag=F, upper=F))
-    }
-    names(cov.matrices) <- colnames(cov)
-    cov.matrices$space <- space.m
-    cov.matrices$bray.sim <- bray.sim
+    intra.m <- as.matrix(dist(map$seas_pos  , method='euclidean', diag=F, upper=F))
+    inter.m <- as.matrix(dist(map$epoch.date, method='euclidean', diag=F, upper=F))
+    cov.matrices <- list(bray.sim,space.m,intra.m,inter.m)
+    names(cov.matrices) <- c('bray.sim','space','seas_pos','epoch.date')
     
     #analyze data subset i. 
     lower  <- lapply(cov.matrices, ecodist::lower)
@@ -61,12 +60,11 @@ out.boot <-
     dat$space <- dat$space / 1000
     
     #run model - lm is fine. We are testing significance with distribution of effect sizes via boostrap, not permutation via MRM.
-    preds <- paste(c('space',covs), collapse = '+')
-    mod.formula <- paste0('log(bray.sim) ~ ',preds)
-    m <- ecodist::MRM(mod.formula, data=dat)
+    m <- lm(log(bray.sim) ~ space + seas_pos + epoch.date, data=dat)
     
     #return output 
-    return(c(m$coef[,1]))
+    to_return <- coef(m)
+    return(to_return)
     
     #print status update
     cat(paste0(i,' of ',n.straps,' iterations completed...\n'))
@@ -75,6 +73,7 @@ toc()
 
 #collapse output list to data.frame
 output <- data.frame(do.call('rbind',out.boot))
+colnames(output) <- c('intercept','space','seas_pos','epoch.date')
 
 #save output.
 saveRDS(output, output.path)
