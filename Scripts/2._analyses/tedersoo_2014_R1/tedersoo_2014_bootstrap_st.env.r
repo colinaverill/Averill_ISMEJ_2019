@@ -6,7 +6,7 @@ source('Scripts/functions/tic_toc.r')
 library(doParallel)
 
 #number of bootstrap simulations.
-n.straps <- 1000
+n.straps <- 10000
 
 #register parallel environment.
 registerDoParallel(cores=28)
@@ -88,7 +88,7 @@ toc()
 
 #collapse output list to data.frame
 output <- data.frame(do.call('rbind',out.boot))
-colnames(output) <- c('intercept','space','seas_pos','epoch.date')
+#colnames(output) <- c('intercept','space','seas_pos','epoch.date')
 
 #save output.
 saveRDS(output, output.path)

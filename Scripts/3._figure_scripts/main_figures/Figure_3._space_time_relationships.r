@@ -24,7 +24,7 @@ d.lt <- d.lt$st.dat
 
 #grab bootstrap parameter values for reporting
 #TED results
-lt.p <- readRDS(ted_bootstrap_output.path)
+lt.p <- readRDS(ted_bootstrap_st.only_output.path)
 lt.space.mean      <- formatC(mean(lt.p$space)        , format = "e", digits = 2)
 lt.space.ci        <- formatC(1.96*sd(lt.p$space)     , format = "e", digits = 2)
 lt.time.intra.mean <- formatC(mean(lt.p$seas_pos)     , format = "e", digits = 2)
@@ -34,7 +34,7 @@ lt.time.inter.ci   <- formatC(1.96*sd(lt.p$epoch.date), format = "e", digits = 2
 
 #TAL results
 #get time interaction
-jt.p <- readRDS(tal_bootstrap_output.path)
+jt.p <- readRDS(tal_bootstrap_st.only_output.path)
 jt.space.mean      <- formatC(mean(jt.p$space)        , format = "e", digits = 2)
 jt.space.ci        <- formatC(1.96*sd(jt.p$space)     , format = "e", digits = 2)
 jt.time.intra.mean <- formatC(mean(jt.p$seas_pos)     , format = "e", digits = 2)
