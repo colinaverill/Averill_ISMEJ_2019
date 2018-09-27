@@ -7,7 +7,7 @@ source('Scripts/functions/tic_toc.r')
 library(doParallel)
 
 #number of bootstrap simulations.
-n.straps <- 10000
+n.straps <- 1000
 
 #register parallel environment.
 registerDoParallel(cores=28)
@@ -19,8 +19,12 @@ output.path <- tal_bootstrap_st.only_output.path
 otu <- readRDS(tal_clean_otu.path)
 map <- readRDS(tal_clean_map.path)
 
+#get complete cases. We need to complete case with covariates so the samples in this analysis match the environmental analysis.
+old.cov.names <- c('epoch.date','doy','seas_pos','Perc.Soil.Moisture','CNRatio','pH','Perc.C','NPP','MAP','MAT','MAT_CV','MAP_CV')
+new.cov.names <- c('epoch.date','doy','seas_pos','Moisture','C_N','pH','C','NPP','MAP','MAT','MAT_CV','MAP_CV')
+for(i in 1:length(old.cov.names)){colnames(map)[which(names(map) == old.cov.names[i])] <- new.cov.names[i]}
 #get complete cases.
-to_keep <- c('seas_pos','epoch.date','latitude.dd','longitude.dd','Mapping.ID','Sample.ID')
+to_keep <- c(new.cov.names,'latitude.dd','longitude.dd','Mapping.ID','Sample.ID')
 map <- map[,colnames(map) %in% to_keep]
 map <- map[complete.cases(map),]
 otu <- otu[,colnames(otu) %in% map$Mapping.ID]
@@ -61,6 +65,7 @@ out.boot <-
     
     #run model - lm is fine. We are testing significance with distribution of effect sizes via boostrap, not permutation via MRM.
     m <- lm(log(bray.sim) ~ space + seas_pos + epoch.date, data=dat)
+    #m <- ecodist::MRM(log(bray.sim) ~ space + seas_pos + epoch.date, data = dat)
     
     #return output 
     to_return <- coef(m)

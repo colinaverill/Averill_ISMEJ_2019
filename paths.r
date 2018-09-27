@@ -124,6 +124,7 @@ harv_neon_sub_boostrap.path <- paste0(pecan.dir,'harv_neon_sub_bootstrap.rds')
 #Main Figures. Figure 1 is a conceptual figure made in powerpoint (embarassing I know...)
 fig_2.path <- 'Figures/Fig_2._fitted_vs_observed.png'
 fig_3.path <- 'Figures/Fig_3._space_time_fits.png'
+fig_4.path <- 'Figures/Fig_4._space_time_fits_with_env.png'
 
 #Supplementary Figures.
 fig_S1.path <- 'Figures/Fig_S1._histograms_space_time_distance.png'

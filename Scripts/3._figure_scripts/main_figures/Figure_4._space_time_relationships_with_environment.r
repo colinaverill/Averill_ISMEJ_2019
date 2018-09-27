@@ -8,23 +8,23 @@ cols <- wes_palette("Moonrise3", 5)
 
 #set output path, load data anda bootstrap results.----
 #set figure save destination.
-figure_file.path <- fig_3.path
+figure_file.path <- fig_4.path
 
 #grab Leho Tedersoo and Jenny Talbot fitted vs. observed values based on MRM model.
 d.lt <- readRDS(ted_model_output.path)
 d.jt <- readRDS(tal_model_output.path)
 
 #break out data and r.sq
-mod.lt <- d.lt$st.mrm
-mod.jt <- d.jt$st.mrm
-d.jt.rsq <- round(summary(d.jt$st.lm)$r.squared,2)
-d.lt.rsq <- round(summary(d.lt$st.lm)$r.squared,2)
-d.jt <- d.jt$st.dat
-d.lt <- d.lt$st.dat
+mod.lt <- d.lt$st.env.mrm
+mod.jt <- d.jt$st.env.mrm
+d.jt.rsq <- round(summary(d.jt$st.env.lm)$r.squared,2)
+d.lt.rsq <- round(summary(d.lt$st.env.lm)$r.squared,2)
+d.jt <- d.jt$st.env.dat
+d.lt <- d.lt$st.env.dat
 
 #grab bootstrap parameter values for reporting
 #TED results
-lt.p <- readRDS(ted_bootstrap_st.only_output.path)
+lt.p <- readRDS(ted_bootstrap_st.env_output.path)
 lt.space.mean      <- formatC(mean(lt.p$space)        , format = "e", digits = 2)
 lt.space.ci        <- formatC(1.96*sd(lt.p$space)     , format = "e", digits = 2)
 lt.time.intra.mean <- formatC(mean(lt.p$seas_pos)     , format = "e", digits = 2)
@@ -34,7 +34,7 @@ lt.time.inter.ci   <- formatC(1.96*sd(lt.p$epoch.date), format = "e", digits = 2
 
 #TAL results
 #get time interaction
-jt.p <- readRDS(tal_bootstrap_st.only_output.path)
+jt.p <- readRDS(tal_bootstrap_st.env_output.path)
 jt.space.mean      <- formatC(mean(jt.p$space)        , format = "e", digits = 2)
 jt.space.ci        <- formatC(1.96*sd(jt.p$space)     , format = "e", digits = 2)
 jt.time.intra.mean <- formatC(mean(jt.p$seas_pos)     , format = "e", digits = 2)
@@ -82,8 +82,9 @@ lines(lowess(y.space ~ x2), lty=2, col=s.col, lwd = 2)
 mtext('Space (km)', side = 1, cex = 0.7, line = 2)
 mtext('space', side =3 , cex = 0.7, line = -1.2, adj = 0.5)
 mtext('a.', side = 1, cex = 0.7, adj = .025, line = -1.1)
-mtext(as.expression(paste('parameter estimate')), side = 3, line = -2.4, cex = 0.7)
-mtext(as.expression(paste(lt.space.mean,'+/-',lt.space.ci)), side = 3, line = -3.2, cex = 0.7)
+mtext(as.expression(paste('not significant')), side = 3, line = -2.4, cex = 0.7)
+#mtext(as.expression(paste('parameter estimate')), side = 3, line = -2.4, cex = 0.7)
+#mtext(as.expression(paste(lt.space.mean,'+/-',lt.space.ci)), side = 3, line = -3.2, cex = 0.7)
 
 
 #LT community similarity ~ time - intraannual
@@ -104,9 +105,9 @@ lines(lowess(y.time.inter ~ x4), lty=2, col=s.col, lwd = 2)
 mtext('Time (days)', side = 1, cex = 0.7, line = 2)
 mtext('time (inter-annual)', side =3 , cex = 0.7, line = -1.2, adj = 0.5)
 mtext('c.', side = 1, cex = 0.7, adj = .025, line = -1.1)
-mtext(as.expression(paste('not significant')), side = 3, line = -2.4, cex = 0.7)
-#mtext(as.expression(paste('parameter estimate')), side = 3, line = -2.4, cex = 0.7)
-#mtext(as.expression(paste(lt.time.inter.mean,'+/-',lt.time.inter.ci)), side = 3, line = -3.2, cex = 0.7)
+#mtext(as.expression(paste('not significant')), side = 3, line = -2.4, cex = 0.7)
+mtext(as.expression(paste('parameter estimate')), side = 3, line = -2.4, cex = 0.7)
+mtext(as.expression(paste(lt.time.inter.mean,'+/-',lt.time.inter.ci)), side = 3, line = -3.2, cex = 0.7)
 
 
 #set y and x predictors for JT
