@@ -88,7 +88,7 @@ toc()
 
 #collapse output list to data.frame
 output <- data.frame(do.call('rbind',out.boot))
-colnames(output) <- c('intercept','space','seas_pos','epoch.date')
+colnames(output) <- c('intercept','space','epoch.date','seas_pos')
 
 #save output.
 saveRDS(output, output.path)
