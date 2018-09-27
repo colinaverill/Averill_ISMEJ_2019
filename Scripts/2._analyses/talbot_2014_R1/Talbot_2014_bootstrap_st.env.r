@@ -76,6 +76,7 @@ out.boot <-
     preds <- paste(c('space',covs), collapse = '+')
     mod.formula <- paste0('log(bray.sim) ~ ',preds)
     m <- lm(mod.formula, data=dat)
+    #m <- ecodist::MRM(mod.formula, data = dat)
     
     #return output 
     to_return <- coef(m)
@@ -88,7 +89,7 @@ toc()
 
 #collapse output list to data.frame
 output <- data.frame(do.call('rbind',out.boot))
-colnames(output) <- c('intercept','space','epoch.date','seas_pos')
+colnames(output)[1] <- c('intercept')
 
 #save output.
 saveRDS(output, output.path)

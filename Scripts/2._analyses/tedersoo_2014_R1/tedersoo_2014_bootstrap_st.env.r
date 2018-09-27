@@ -86,11 +86,11 @@ out.boot <-
   } #end loop. 
 toc()
 
-#collapse output list to data.frame
+#collapse output list to data.frame----
 output <- data.frame(do.call('rbind',out.boot))
-#colnames(output) <- c('intercept','space','seas_pos','epoch.date')
+colnames(output)[1] <- c('intercept')
 
-#save output.
+#save output.----
 saveRDS(output, output.path)
 
 #end script.
