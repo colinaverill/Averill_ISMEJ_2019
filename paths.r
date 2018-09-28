@@ -134,3 +134,7 @@ fig_S4.path <- 'Figures/Fig_S4._validation_fits.png'
 fig_S5.path <- 'Figures/Fig_S5._LT_space_time_distances_vs_predictors.png'
 fig_S6.path <- 'Figures/Fig_S6._JT_space_time_distances_vs_predictors.png'
 fig_S7.path <- 'Figures/Fig_S7._Monte_Carlo_results.png'
+
+#Tables.
+table_1.path <- 'Figures/table_1.csv'
+table_S1.path <- 'Figures/table_S1.csv'

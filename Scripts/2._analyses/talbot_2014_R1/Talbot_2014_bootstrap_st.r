@@ -7,7 +7,7 @@ source('Scripts/functions/tic_toc.r')
 library(doParallel)
 
 #number of bootstrap simulations.
-n.straps <- 10000
+n.straps <- 1000
 
 #register parallel environment.
 registerDoParallel(cores=28)
@@ -35,7 +35,7 @@ otu <- otu[,order(colnames(otu))]
 tic()
 out.boot <- 
   foreach(i = 1:n.straps) %dopar% {
-    #sample columns of the OTU table with replacement
+    #sample columns of the OTU table with replacement----
     myOrder <- sample(ncol(otu), replace = T)
     otu.j <- otu[,myOrder]
     map.j <- map[myOrder,]
@@ -51,8 +51,8 @@ out.boot <-
     space.m <- geosphere::distm(points)
     
     #remaining covariates.
-    intra.m <- as.matrix(dist(map$seas_pos  , method='euclidean', diag=F, upper=F))
-    inter.m <- as.matrix(dist(map$epoch.date, method='euclidean', diag=F, upper=F))
+    intra.m <- as.matrix(dist(map.j$seas_pos  , method='euclidean', diag=F, upper=F))
+    inter.m <- as.matrix(dist(map.j$epoch.date, method='euclidean', diag=F, upper=F))
     cov.matrices <- list(bray.sim,space.m,intra.m,inter.m)
     names(cov.matrices) <- c('bray.sim','space','seas_pos','epoch.date')
     
@@ -67,16 +67,16 @@ out.boot <-
     m <- lm(log(bray.sim) ~ space + seas_pos + epoch.date, data=dat)
     #m <- ecodist::MRM(log(bray.sim) ~ space + seas_pos + epoch.date, data = dat)
     
-    #return output 
+    #return output ----
     to_return <- coef(m)
     return(to_return)
     
-    #print status update
+    #print status update----
     cat(paste0(i,' of ',n.straps,' iterations completed...\n'))
   } #end loop. 
 toc()
 
-#collapse output list to data.frame
+#collapse output list to data.frame----
 output <- data.frame(do.call('rbind',out.boot))
 colnames(output) <- c('intercept','space','seas_pos','epoch.date')
 

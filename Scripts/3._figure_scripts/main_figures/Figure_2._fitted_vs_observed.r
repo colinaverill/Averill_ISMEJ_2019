@@ -113,8 +113,8 @@ legend("bottomright", bty = "n",
        cex = i.cex)
 
 ####Outer labels.
-mtext('Observed ln(Bray-Curtis Similarity)', side=2, cex=o.cex, line= 0.5 , outer=T)
-mtext('Fitted ln(Bray-Curtis Similarity)'  , side=1, cex=o.cex, line= 1 , outer=T)
+mtext('Observed log-transformed Bray-Curtis Similarity', side=2, cex=o.cex, line= 0.5 , outer=T)
+mtext('Fitted log-transformed Bray-Curtis Similarity'  , side=1, cex=o.cex, line= 1 , outer=T)
 mtext('Global Northern Temperate Soil Fungi', side=3, cex=o.cex, line=-1.2 , outer=T)
 mtext('North American Soil Fungi',            side=3, cex=o.cex, line=-20.5, outer=T)
 

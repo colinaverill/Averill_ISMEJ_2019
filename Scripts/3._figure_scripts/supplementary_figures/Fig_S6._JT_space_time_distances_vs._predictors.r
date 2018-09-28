@@ -17,8 +17,8 @@ d.jt <- data.table(d.jt$st.env.dat)
 
 #grab variables of interest.
 d <- d.jt
-vars  <- list(d$MAT, d$MAP, d$MAT_CV, d$MAP_CV, d$C, d$C_N, d$pH, d$Moisture)
-names <- c('MAT','MAP','MAT_CV','MAP_CV','% C','C:N','pH','soil moisture')
+vars  <- list(d$MAT, d$MAP, d$MAT_CV, d$MAP_CV, d$NPP, d$C, d$C_N, d$pH, d$Moisture)
+names <- c('MAT','MAP','MAT_CV','MAP_CV','NPP','% C','C:N','pH','soil moisture')
 fin <- length(vars)
 
 #save dimensions, destination.----
@@ -31,7 +31,7 @@ y.ln <- 4 #distance of y axis label from axis
 r.col <- 'purple' #r2 label color.
 x.pos <- 0.9 #x position r2 label
 
-par(mfrow = c(8,3),
+par(mfrow = c(9,3),
     oma = c(4,6,4,1),
     mar = c(2,2,3,2),
     mai = c(0,0,0,0))

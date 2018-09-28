@@ -3,6 +3,9 @@
 rm(list=ls())
 source('paths.r')
 
+#set output path
+output.path <- table_S1.path
+
 #load bootstrap results.
 bci     <-             readRDS(bci_all_boostrap.path)
 kiv.bac <-  data.frame(readRDS(kiv_bac_bootstrap.path))
@@ -59,3 +62,6 @@ colnames(to_table) <- c('space parameter', 'time parameter')
 to_table$study <- c('BCI Trees','BCI Trees subset','La Selva Bacteria','La Selva Bacteria subset','La Selva Fungi','La Selva Fungi subset','Harvard Forest Fungi','Harvard Forest Fungi subset')
 to_table <- to_table[,c('study','space parameter','time parameter')]
 to_table
+
+#save output.
+write.csv(to_table, output.path)

@@ -7,7 +7,7 @@ source('Scripts/functions/tic_toc.r')
 library(doParallel)
 
 #number of bootstrap simulations.
-n.straps <- 10000
+n.straps <- 1000
 
 #register parallel environment.
 registerDoParallel(cores=28)
@@ -47,8 +47,8 @@ out.boot <-
     space.m <- geosphere::distm(points)
     
     #remaining covariates.
-    intra.m <- as.matrix(dist(map$seas_pos  , method='euclidean', diag=F, upper=F))
-    inter.m <- as.matrix(dist(map$epoch.date, method='euclidean', diag=F, upper=F))
+    intra.m <- as.matrix(dist(map.j$seas_pos  , method='euclidean', diag=F, upper=F))
+    inter.m <- as.matrix(dist(map.j$epoch.date, method='euclidean', diag=F, upper=F))
     cov.matrices <- list(bray.sim,space.m,intra.m,inter.m)
     names(cov.matrices) <- c('bray.sim','space','seas_pos','epoch.date')
     
