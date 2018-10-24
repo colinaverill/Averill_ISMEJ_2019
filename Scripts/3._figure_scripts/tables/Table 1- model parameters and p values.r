@@ -58,6 +58,17 @@ out <- merge(out,to_order)
 out <- out[order(row.order2),]
 out[,row.order2 := NULL]
 out$var <- new.names
+out <- as.data.frame(out)
+
+#convert p-values > 0.05 to N.S.
+p_cols <- which(colnames(out) %in% colnames(out[,grep('p.val',colnames(out))]))
+for(i in 1:length(p_cols)){
+  for(k in 1:length(out[,p_cols[i]])){
+    if(!is.na(out[k,p_cols[i]]) & out[k,p_cols[i]] > 0.05){
+      out[k,p_cols[i]] <- 'N.S.'
+    }
+  }
+}
 
 #save output.----
 write.csv(out,output.path)
