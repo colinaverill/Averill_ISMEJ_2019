@@ -4,7 +4,7 @@ source('paths.r')
 library(data.table)
 
 #load data, set output path, do some manipulation.----
-output_path <- fig_S7.path
+output_path <- fig_S9.path
 #data
 d <- readRDS(ted_monte_carlo_results.path)
 d <- data.table(d)

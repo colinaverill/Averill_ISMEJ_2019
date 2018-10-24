@@ -143,8 +143,12 @@ map <- map[!is.na(map$seas_pos),]
 map <- map[map$n_seasons < 2,]
 map <- map[map$seas_pos <  1.1,]
 map <- map[map$seas_pos > -0.1,]
-map <- map[map$seas_pos.evi2 <  1.1,]
-map <- map[map$seas_pos.evi2 > -0.1,]
+
+#remove dry tropical forests, still in temperate latitudes (4 sites)
+#map <- map[!(map$Biome == 'Dry tropical forests'),]
+#remove mediterranean and grassland forests. 
+#map <- map[grep('forest',map$Biome),]
+
 
 #dial in map and otu table to be same order.
 otu <- otu[,colnames(otu) %in% map$tedersoo.code]

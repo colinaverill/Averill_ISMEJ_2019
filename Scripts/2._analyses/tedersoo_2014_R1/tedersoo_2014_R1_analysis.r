@@ -36,6 +36,7 @@ dat <- as.data.frame(lapply(dat, c))
 
 #RUN MODELS.----
 #raw space-time (st) models
+st.mrm <- ecodist::MRM(log(bray.sim) ~ space + epoch.date + doy      , data = dat);st.mrm
 st.mrm <- ecodist::MRM(log(bray.sim) ~ space + epoch.date + seas_pos , data = dat);st.mrm
 st     <-           lm(log(bray.sim) ~ space + epoch.date + seas_pos , data = dat)
 #ENV models.

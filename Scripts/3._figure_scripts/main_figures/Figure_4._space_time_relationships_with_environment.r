@@ -95,8 +95,8 @@ mtext('Time (seasonal distance)', side = 1, cex = 0.7, line = 2)
 mtext('time (intra-annual)', side =3 , cex = 0.7, line = -1.2, adj = 0.5)
 mtext('b.', side = 1, cex = 0.7, adj = .025, line = -1.1)
 #mtext(as.expression(paste('not significant')), side = 3, line = -2.4, cex = 0.7)
-mtext(as.expression(paste('parameter estimate')), side = 3, line = -2.4, cex = 0.7)
-mtext(as.expression(paste(lt.time.intra.mean,'+/-',lt.time.intra.ci)), side = 3, line = -3.2, cex = 0.7)
+#mtext(as.expression(paste('parameter estimate')), side = 3, line = -2.4, cex = 0.7)
+#mtext(as.expression(paste(lt.time.intra.mean,'+/-',lt.time.intra.ci)), side = 3, line = -3.2, cex = 0.7)
 
 #LT community similarity ~ time - inter annual
 plot(y.time.inter ~ x4, cex = 0.05, col = p.col[3])
@@ -105,9 +105,9 @@ lines(lowess(y.time.inter ~ x4), lty=2, col=s.col, lwd = 2)
 mtext('Time (days)', side = 1, cex = 0.7, line = 2)
 mtext('time (inter-annual)', side =3 , cex = 0.7, line = -1.2, adj = 0.5)
 mtext('c.', side = 1, cex = 0.7, adj = .025, line = -1.1)
-mtext(as.expression(paste('not significant')), side = 3, line = -2.4, cex = 0.7)
-#mtext(as.expression(paste('parameter estimate')), side = 3, line = -2.4, cex = 0.7)
-#mtext(as.expression(paste(lt.time.inter.mean,'+/-',lt.time.inter.ci)), side = 3, line = -3.2, cex = 0.7)
+#mtext(as.expression(paste('not significant')), side = 3, line = -2.4, cex = 0.7)
+mtext(as.expression(paste('parameter estimate')), side = 3, line = -2.4, cex = 0.7)
+mtext(as.expression(paste(lt.time.inter.mean,'+/-',lt.time.inter.ci)), side = 3, line = -3.2, cex = 0.7)
 
 
 #set y and x predictors for JT
