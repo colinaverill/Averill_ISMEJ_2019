@@ -21,21 +21,10 @@ output.path <- bci_sub_bootstrap.path
 otu <- readRDS(bci_otu_clean.path)
 map <- readRDS(bci_map_clean.path)
 
-###FOR TESTING ON PECAN2###
-#source('Scripts/space_time_functions.r')
-#registerDoParallel(cores=2)
-#output.path <- '/fs/data3/caverill/Microbial_Space_Time_data/BCI50ha_data/out_bci_bootstrap_sub.100.rds'
-#otu <- readRDS('/fs/data3/caverill/Microbial_Space_Time_data/BCI50ha_data/BCI_otu.rds')
-#map <- readRDS('/fs/data3/caverill/Microbial_Space_Time_data/BCI50ha_data/BCI_map.rds')
-#first, subset otu and map file to 10 samples for testing.
-#otu <- otu[,1:1000]
-#map <- map[rownames(map) %in% colnames(otu),]
-
 #run the loop.----
 #empty datarframe for saving bootstrap output
 boot.list <- list()
 tic()
-#foreach(i = 1:n.samples) %dopar% {
 for(i in 1:n.samples){
   #subset map and otu files
   sub.map  <- subsample.map(map, map$plot.code)

@@ -1,11 +1,12 @@
 #paths.r file for Averill et al. ISMEJ in revision.
 
 #high-level directory structure.----
-#NEFI_data - master data directory.
+#master data directory.
 host <- system('hostname', intern=T)
-#data directory conditional to which computer you are working on.
+#data directory conditional to which computer you are working on. Default directory is my university cluster.
 data.dir <- '/projectnb/talbot-lab-data/caverill/Averill_ISMEJ_2018_data/'
 #conditional data directory assignment.
+#If I am working on pecan2, find the data here.
 if(host == 'pecan2'){data.dir <- '/fs/data3/caverill/Averill_ISMEJ_2018_data/'}
 system(paste0('mkdir -p ',data.dir))
 

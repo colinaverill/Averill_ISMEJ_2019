@@ -17,17 +17,7 @@ registerDoParallel(cores=28)
 otu <- readRDS(bci_otu_clean.path)
 map <- readRDS(bci_map_clean.path)
 
-###TESTING ON PECAN2###
-#registerDoParallel(cores=2)
-#source('Scripts/space_time_functions.r')
-#output.path <- '/fs/data3/caverill/Microbial_Space_Time_data/BCI50ha_data/out_bci_bootstrap.rds'
-#otu <- readRDS('/fs/data3/caverill/Microbial_Space_Time_data/BCI50ha_data/BCI_otu.rds')
-#map <- readRDS('/fs/data3/caverill/Microbial_Space_Time_data/BCI50ha_data/BCI_map.rds')
-#otu <- otu[,1:10]
-#map <- map[rownames(map) %in% colnames(otu),]
-#map <- data.table(map)
-
-#run jacknife script.
+#run bootstrap function.
 tic()
 output <- bootstrap(map,otu,
                    X = map$PX.mean,
