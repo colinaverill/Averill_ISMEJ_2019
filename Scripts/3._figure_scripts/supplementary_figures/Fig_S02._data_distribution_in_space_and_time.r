@@ -5,7 +5,7 @@ source('paths.r')
 
 #load data set output path.----
 #set figure save destination.
-figure_file.path <- fig_S1.path
+figure_file.path <- fig_S02.path
 
 #grab Leho Tedersoo and Jenny Talbot fitted vs. observed values based on MRM model.
 d.lt <- readRDS(ted_model_output.path)

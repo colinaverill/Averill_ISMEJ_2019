@@ -6,7 +6,7 @@ source('paths.r')
 
 #set paths, load and format data.----
 #output path
-out.path <- fig_S2.path
+out.path <- fig_S03.path
 
 #Load data.
 lt <- readRDS(ted_clean_map.path)

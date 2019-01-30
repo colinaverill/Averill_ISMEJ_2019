@@ -7,7 +7,7 @@ library(ggalt)
 
 #laod data, set output path.----
 #output path
-out.path <- fig_S3.path
+out.path <- fig_S04.path
 
 #Load data.
 lt <- readRDS(ted_clean_map.path)

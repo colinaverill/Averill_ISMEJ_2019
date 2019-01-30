@@ -5,7 +5,7 @@ source('paths.r')
 library(wesanderson)
 
 #load data, setup output path.----
-output.path <- fig_S4.path
+output.path <- fig_S05.path
 
 #load and organize data.
     bci <- readRDS(bci_fitted.path)

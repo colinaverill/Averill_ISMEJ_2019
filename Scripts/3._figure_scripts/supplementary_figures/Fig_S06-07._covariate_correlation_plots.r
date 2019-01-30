@@ -15,11 +15,11 @@ tal <- tal[complete.cases(tal),]
 
 
 #Tedersoo plot.----
-png(filename=fig_S5.path,width=8,height=8,units='in',res=300)
+png(filename=fig_S06.path,width=8,height=8,units='in',res=300)
 chart.Correlation(ted, histogram = F, pch = 19, cex = 0.5, rsq = T, cex.cor = 0.8, raw.p_val = T)
 dev.off()
 
 #Talbot plot.----
-png(filename=fig_S6.path,width=8,height=8,units='in',res=300)
+png(filename=fig_S07.path,width=8,height=8,units='in',res=300)
 chart.Correlation(tal, histogram = F, pch = 19, cex = 0.5, rsq = T, cex.cor = 0.8, raw.p_val = T)
 dev.off()
