@@ -36,8 +36,8 @@ The directory `Averill_ISMEJ_2018/Scripts/3._figure_scripts/` contains code to r
 # functions:
 This is a directory of custom functions used in this project for various analyses, and are called from other scripts.
 
-# space_time_power_analysis.r tutorial:
-In an effort to help others understand if they can separate spatial-temporal effects within their own dataset, we created the function `space_time_power_analysis()`. So long at spatial-temporal observations are not completely confounded, it is possible to do this, assuming the analysis has sufficient statistical power. Statistical power will depend on many things. These include how correlated temporal effects are with other predictors (multicollinearity), observation and process error, how much time is being analyzed, the temporal effect size, and sample size. The relative importance of all these factors will depend on the particular data set being analyzed.
+# space_time_analysis.r tutorial:
+In an effort to help others understand if they can separate spatial-temporal effects within their own dataset, we created the function `space_time_analysis()`. So long at spatial-temporal observations are not completely confounded, it is possible to do this, assuming the analysis has sufficient statistical power. Statistical power will depend on many things. These include how correlated temporal effects are with other predictors (multicollinearity), observation and process error, how much time is being analyzed, the temporal effect size, and sample size. The relative importance of all these factors will depend on the particular data set being analyzed.
 
 The function `space_time_analysis.r` Takes a species matrix (i.e. OTU table), a mapping file of covariates, and a formula relating community similarity (specified as `y`) to environmental covariates. Syntax is the same as the `lm()` function in R. The function uses a bootstrap resampling technique (as described in the manuscript) to estimates parameter values and 95% parameter confidence intervals. The script returns parameter estimates and 95% confidence intervals,as well as the raw Monte Carlo output, which is the parameteres estimated in each bootstrap simulation.
 
@@ -73,10 +73,10 @@ As a researcher, you should consider a biologically meaningful temporal effect s
 ```{r}
 rm(list=ls()) #clear environment.
 source('paths.r')
-source('Scripts/functions/space_time_power_analysis.r')
+source('Scripts/functions/space_time_analysis.r')
 map <- readRDS(kiv_clean_fun_map.path)
 otu <- readRDS(kiv_clean_fun_otu.path)
-space_time_power_analysis(y ~ space + time.num, map, otu, n.straps = 1000, warn=F)
+space_time_analysis(y ~ space + time.num, map, otu, n.straps = 1000, warn=F)
 
 ```
 
