@@ -39,28 +39,34 @@ This is a directory of custom functions used in this project for various analyse
 # space_time_power_analysis.r tutorial:
 In an effort to help others understand if they can separate spatial-temporal effects within their own dataset, we created the function `space_time_power_analysis()`. So long at spatial-temporal observations are not completely confounded, it is possible to do this, assuming the analysis has sufficient statistical power. Statistical power will depend on many things. These include how correlated temporal effects are with other predictors (multicollinearity), observation and process error, how much time is being analyzed, the temporal effect size, and sample size. The relative importance of all these factors will depend on the particular data set being analyzed.
 
-The function `space_time_power_analysis.r` Takes a species matrix (i.e. OTU table), a mapping file of covariates, and a formula relating community similarity (specified as `y`) to environmental covariates. Syntax is the same as the `lm()` function in R. The function uses a bootstrap resampling technique (as described in the manuscript) to estimates parameter values and 95% parameter confidence intervals. In addition, the script performs a second bootstrap analysis where the community similarity matrix is randomized, and models are refit. This generates the "null" estimate of parameter uncertainty in the case of no effect. The script returns parameter estimates and 95% confidence intervals, null parameter estimate 95% confidence intervals, as well as the fraction of simulations a parameter was observed to be "significant" at p < 0.05 (or some other p threshold set by user) within all bootstrap simulations. It is important to realize that a parameter estimate can fall within the 95% confidence interval of the "null" parameter estimate, and still be found significant within the analysis. This is always true and should be expected 5% of the time even if the true parameter value is zero, if p<0.05 is the threshold of significance. However, if the parameter estimate is different than zero, then the fraction of simulations that detect a significant effect will increase as the actual parameter value moves towards the tails of the null parameter distribution. Once the parameter estimate is outside the 95% confidence interal of the null parameter distribution, it will be detected as significant (p<0.05) in >95% of simulations. This property is why these results can be useful in the context of power analysis.
+The function `space_time_analysis.r` Takes a species matrix (i.e. OTU table), a mapping file of covariates, and a formula relating community similarity (specified as `y`) to environmental covariates. Syntax is the same as the `lm()` function in R. The function uses a bootstrap resampling technique (as described in the manuscript) to estimates parameter values and 95% parameter confidence intervals. The script returns parameter estimates and 95% confidence intervals,as well as the raw Monte Carlo output, which is the parameteres estimated in each bootstrap simulation.
 
-As a researcher, you should consider a biologically meaningful temporal effect size before analyzing your data. If that effect size falls within the 95% confidence interval of the null parameter estimate, and your analysis find no significant temporal effect, you are in a tough spot. It may be that there is no temporal effect. However, the analysis also suggests that even if the biologically meaningful effect was there, you should not expect to detect it most of the time. If you did the same exact sampling/experiment many many times, you wouldn't expect to see the effect 95% of the time. In this case, the absence of evidence (parameter estimate p<0.05) is not evidence of absence (parameter estimate not different from 0).
+As a researcher, you should consider a biologically meaningful temporal effect size before analyzing your data. If that effect size falls within the 95% confidence interval of the temporal parameter estimate, and the temporal parameter estimate also overlaps zero, you are in a tough spot. It may be that there is no temporal effect. However, the analysis also suggests that even if the biologically meaningful effect was there, you should not expect to detect it 95% of the time. If you did the same exact sampling/experiment many many times, you wouldn't expect to see the effect 95% of the time. In this case, the absence of evidence (parameter estimate p<0.05) is not evidence of absence (parameter estimate not different from 0). Further diagnostics (assessing multicollinearity, observation uncertainty, sampling effort) may help reveal what might allow you to increase statistical power, but in general, it will probably require more data or a better model.
 
 **Function Documentation:**
 ```
 #' space_time_power_analysis.r
-#' This function performs a power analysis to determine the user's ability to detect spatial-temporal effects.
+#' This function analyzes the effects of space, time, and other covariates on Bray-Curtis community similarity.
 #' This function takes a mapping file of covariates, a normalized species matrix (otu table) and a formula as input.
+#' This function returns parameter estimates, and their 95% confidence intervals, calculated via bootstrap simulation. Also returns raw bootstrap output.
 #' This function assumes your species matrix is normalized, such that the columns sum to 1, though it might work without this, but has not been tested.
 #' number of rows in mapping file should match number of columns in otu file. These should be ordered such that samples can be matched.
 #' "space" is a special covariate name. If space is used in the supplied formula, x-y coordinates should be present in the mapping file, named 'x' and 'y'. 
 #' User can choose to natural-log transform community similarity values, if desired.
 #' If this is done, code automatically checks if there are zero values in similarity matrix. If there are, it adds the smallest, non-zero similarity value to all observations before log transforming.
 #'
-#' @param formula   Formula of model to be vetted for statistical power.
-#' @param map       Mapping file of covariates.
-#' @param otu       Normalized OTU table / species matrix such that columns sum to 1.
-#' @param n.straps  Number of bootstrap simulations. Default 2000.
-#' @param p.check   Level of statistical significance to consider. Default p=0.05.
-#' @param warn      Set warn to FALSE if you want to suppress warnings. Default TRUE.
-#' @param log       Natural-log transform similarity values? Default FALSE.
+#' Function returns a list of output.
+#' output$parameters is a table of parameter estimates and their associated confidence intervals.
+#' output$MC_output is the parameter estimates generate from each Monte Carlo bootstrap simulation.
+#' output$conf_interval is the conf_interval that was supplied.
+#'
+#' @param formula       Model formula, syntax same as lm. Has not been tested with interactions.
+#' @param map           Mapping file of covariates.
+#' @param otu           Normalized OTU table / species matrix such that columns sum to 1.
+#' @param n.straps      Number of bootstrap simulations. Default 2000.
+#' @param conf_interval What confidence interval would you like reported? Must be between 0-1. Default is 0.95 (report 95% confidence intervals).
+#' @param warn          Set warn to FALSE if you want to suppress warnings. Default TRUE.
+#' @param log           Natural-log transform similarity values? Default FALSE.
 ```
 
 **Function Example:** Here is an example using the Kivlin et al. 2016 bacterial data post data construction, assuming the present R project is your working directory.
