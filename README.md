@@ -1,6 +1,6 @@
 ## Code Description for Averill et al. 2019 ISME Journal.
 
-This project contains Code to replicate analyses and figures in Averill et al. 2019 ISMEJ. At the end of this document is a tutorial for how to use the function `Scripts/functions/space_time_power_analysis.r`, whcih can be used to assess statistical power to detect temporal effect sizes given space-time confounding in a given sampling design.
+This project contains Code to replicate analyses and figures in Averill et al. 2019 ISMEJ. At the end of this document is a tutorial for how to use the function `Scripts/functions/space_time_analysis.r`, whcih can be used to assess statistical power to detect temporal effect sizes given space-time confounding in a given sampling design.
 
 # paths.r
 
@@ -39,7 +39,7 @@ This is a directory of custom functions used in this project for various analyse
 # space_time_analysis.r tutorial:
 In an effort to help others understand if they can separate spatial-temporal effects within their own dataset, we created the function `space_time_analysis()`. So long at spatial-temporal observations are not completely confounded, it is possible to do this, assuming the analysis has sufficient statistical power. Statistical power will depend on many things. These include how correlated temporal effects are with other predictors (multicollinearity), observation and process error, how much time is being analyzed, the temporal effect size, and sample size. The relative importance of all these factors will depend on the particular data set being analyzed.
 
-The function `space_time_analysis.r` Takes a species matrix (i.e. OTU table), a mapping file of covariates, and a formula relating community similarity (specified as `y`) to environmental covariates. Syntax is the same as the `lm()` function in R. The function uses a bootstrap resampling technique (as described in the manuscript) to estimates parameter values and 95% parameter confidence intervals. The script returns parameter estimates and 95% confidence intervals,as well as the raw Monte Carlo output, which is the parameteres estimated in each bootstrap simulation.
+The function `space_time_analysis.r` takes a species matrix (i.e. OTU table), a mapping file of covariates, and a formula relating community similarity (specified as `y`) to environmental covariates. Syntax is the same as the `lm()` function in R. The function uses a bootstrap resampling technique (as described in the manuscript) to estimates parameter values and 95% parameter confidence intervals. The script returns parameter estimates and 95% confidence intervals,as well as the raw Monte Carlo output, which is the parameteres estimated in each bootstrap simulation.
 
 As a researcher, you should consider a biologically meaningful temporal effect size before analyzing your data. If that effect size falls within the 95% confidence interval of the temporal parameter estimate, and the temporal parameter estimate also overlaps zero, you are in a tough spot. It may be that there is no temporal effect. However, the analysis also suggests that even if the biologically meaningful effect was there, you should not expect to detect it 95% of the time. If you did the same exact sampling/experiment many many times, you wouldn't expect to see the effect 95% of the time. In this case, the absence of evidence (parameter estimate p<0.05) is not evidence of absence (parameter estimate not different from 0). Further diagnostics (assessing multicollinearity, observation uncertainty, sampling effort) may help reveal what might allow you to increase statistical power, but in general, it will probably require more data or a better model.
 
@@ -79,5 +79,3 @@ otu <- readRDS(kiv_clean_fun_otu.path)
 space_time_analysis(y ~ space + time.num, map, otu, n.straps = 1000, warn=F)
 
 ```
-
-
