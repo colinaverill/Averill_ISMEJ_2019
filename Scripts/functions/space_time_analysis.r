@@ -1,4 +1,4 @@
-#' space_time_power_analysis.r
+#' space_time_analysis.r
 #' This function analyzes the effects of space, time, and other covariates on Bray-Curtis community similarity.
 #' This function takes a mapping file of covariates, a normalized species matrix (otu table) and a formula as input.
 #' This function returns parameter estimates, and their 95% confidence intervals, calculated via bootstrap simulation. Also returns raw bootstrap output.
