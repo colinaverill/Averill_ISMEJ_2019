@@ -95,7 +95,7 @@ bci_otu_clean.path <- paste0(pecan.dir,'BCI_otu.rds')
 bci_all_matrix_list.path <- paste0(pecan.dir,'BCI_matrix_list.rds')
 bci_sub_matrix_list.path <- paste0(pecan.dir,'sub_BCI_matrix_list.rds')
 
-#scc_gen: BCI analysis and bootstrap results. In theory run on scc.
+#scc_gen: BCI analysis and bootstrap results.
     bci_fitted.path <- paste0(scc.dir,'BCI_data_fitted.rds')
 bci_MRM_output.path <- paste0(scc.dir,'BCI_MRM_output.rds')
 bci_MRM_params.path <- paste0(scc.dir,'BCI_MRM_parms.rds')
@@ -121,8 +121,8 @@ harv_neon_sub_boostrap.path <- paste0(pecan.dir,'harv_neon_sub_bootstrap.rds')
 
 
 #Figure Files.----
-#storing these in main project repository.
-#Main Figures. Figure 1 is a conceptual figure made in powerpoint (embarassing I know...)
+#These are stored these in main project repository, rather than the data repository.
+#Main Figures. Figure 1 is a conceptual figure made in powerpoint, and so is not included here. (embarassing I know...)
 fig_2.path <- 'Figures/Fig_2._fitted_vs_observed.png'
 fig_3.path <- 'Figures/Fig_3._space_time_fits.png'
 fig_4.path <- 'Figures/Fig_4._space_time_fits_with_env.png'
@@ -140,5 +140,5 @@ fig_S09.path <- 'Figures/Fig_S09._JT_space_time_distances_vs_predictors.png'
 fig_S10.path <- 'Figures/Fig_S10._Monte_Carlo_results.png'
 
 #Tables.
-table_1.path <- 'Figures/table_1.csv'
+ table_1.path <- 'Figures/table_1.csv'
 table_S1.path <- 'Figures/table_S1.csv'

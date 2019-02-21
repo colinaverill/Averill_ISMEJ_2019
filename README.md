@@ -1,6 +1,6 @@
-## Code Description for Averill et al. 2019 ISME Journal.
+## Code Description for Averill et al. 2019 in revision, ISME Journal.
 
-This project contains Code to replicate analyses and figures in Averill et al. 2019 ISMEJ. At the end of this document is a tutorial for how to use the function `Scripts/functions/space_time_analysis.r`, whcih can be used to assess statistical power to detect temporal effect sizes given space-time confounding in a given sampling design.
+This project contains Code to replicate analyses and figures in Averill et al. in revision, 2019 ISMEJ. At the end of this document is a tutorial for how to use the function `Scripts/functions/space_time_analysis.r`, which can be used to assess statistical power to detect temporal effect sizes given space-time confounding in a given sampling design.
 
 # paths.r
 
